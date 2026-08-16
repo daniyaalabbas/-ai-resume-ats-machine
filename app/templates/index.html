@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume ATS Machine</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🚀 AI Resume ATS Machine</h1>
+
+    <p class="subtitle">
+        Analyze your resume against a job description.
+    </p>
+
+    <form action="/analyze" method="POST">
+
+        <label for="job_description">
+            Job Description
+        </label>
+
+        <textarea
+            id="job_description"
+            name="job_description"
+            placeholder="Paste the job description here..."
+            required
+        ></textarea>
+
+        <label for="resume">
+            Resume
+        </label>
+
+        <textarea
+            id="resume"
+            name="resume"
+            placeholder="Paste your resume here..."
+            required
+        ></textarea>
+
+        <button type="submit">
+            Analyze Resume
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

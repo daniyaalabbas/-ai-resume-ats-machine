@@ -1,0 +1,14 @@
+.git
+.gitignore
+.venv
+venv
+__pycache__
+*.pyc
+uploads
+.env
+.vscode
+.idea
+README.md
+data
+services
+app.py
