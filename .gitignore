@@ -6,3 +6,4 @@ uploads/
 .env
 .vscode/
 .idea/
+actions-runner-ats/
