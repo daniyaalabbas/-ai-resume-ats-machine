@@ -1,4 +1,4 @@
-name: AI Resume ATS CI/CD
+name: AI Resume ATS CI
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build-and-push:
+  test:
     runs-on: [self-hosted, linux, x64]
 
     steps:
@@ -45,7 +45,6 @@ jobs:
           docker push daniyaalabbas/ai-resume-ats:${{ github.sha }}
           docker push daniyaalabbas/ai-resume-ats:latest
 
-
       - name: Deploy to Kubernetes
         run: |
           kubectl set image deployment/ai-resume-ats \
@@ -62,7 +61,17 @@ jobs:
 
       - name: Kubernetes health check
         run: |
-          POD=$(kubectl get pods -l app=ai-resume-ats \
-            -o jsonpath='{.items[0].metadata.name}')
+          kubectl wait --for=condition=ready pod \
+            -l app=ai-resume-ats \
+            --timeout=120s
+
+          POD=$(kubectl get pods \
+            -l app=ai-resume-ats \
+            --field-selector=status.phase=Running \
+            --sort-by=.metadata.creationTimestamp \
+            -o jsonpath='{.items[-1].metadata.name}')
+
+          echo "Testing pod: $POD"
+
           kubectl exec "$POD" -- \
             python -c "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:5000/health').read().decode())"
