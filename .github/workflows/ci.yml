@@ -1,4 +1,4 @@
-name: AI Resume ATS CI
+name: AI Resume ATS CI/CD
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  test:
+  build-and-push:
     runs-on: [self-hosted, linux, x64]
 
     steps:
@@ -32,8 +32,15 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ai-resume-ats:test .
+          docker build -t daniyaalabbas/ai-resume-ats:${{ github.sha }} .
+          docker tag daniyaalabbas/ai-resume-ats:${{ github.sha }} \
+            daniyaalabbas/ai-resume-ats:latest
 
       - name: Verify Docker image
         run: |
-          docker image inspect ai-resume-ats:test
+          docker image inspect daniyaalabbas/ai-resume-ats:${{ github.sha }}
+
+      - name: Push Docker image
+        run: |
+          docker push daniyaalabbas/ai-resume-ats:${{ github.sha }}
+          docker push daniyaalabbas/ai-resume-ats:latest
