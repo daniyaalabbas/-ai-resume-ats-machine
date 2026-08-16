@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Analysis Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📊 ATS Analysis Result</h1>
+
+    <div class="score">
+        <h2>ATS Score</h2>
+        <p>{{ score }}%</p>
+    </div>
+
+    <h2>✅ Matched Keywords</h2>
+
+    {% if matched %}
+        <ul>
+            {% for keyword in matched %}
+                <li>{{ keyword }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No matching keywords found.</p>
+    {% endif %}
+
+    <h2>❌ Missing Keywords</h2>
+
+    {% if missing %}
+        <ul>
+            {% for keyword in missing %}
+                <li>{{ keyword }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No missing keywords.</p>
+    {% endif %}
+
+    <br>
+
+    <a href="/">← Analyze another resume</a>
+
+</div>
+
+</body>
+</html>

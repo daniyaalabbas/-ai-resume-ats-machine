@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from services.ats_engine import calculate_ats_score
 
 app = Flask(__name__)
 
@@ -11,6 +12,21 @@ def home():
 @app.route("/health")
 def health():
     return {"status": "healthy"}
+
+
+@app.route("/analyze", methods=["POST"])
+def analyze():
+    resume = request.form.get("resume", "")
+    job_description = request.form.get("job_description", "")
+
+    result = calculate_ats_score(resume, job_description)
+
+    return render_template(
+        "result.html",
+        score=result["score"],
+        matched=result["matched"],
+        missing=result["missing"],
+    )
 
 
 if __name__ == "__main__":

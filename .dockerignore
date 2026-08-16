@@ -10,5 +10,4 @@ uploads
 .idea
 README.md
 data
-services
 app.py
