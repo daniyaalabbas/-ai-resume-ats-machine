@@ -7,3 +7,5 @@ uploads/
 .vscode/
 .idea/
 actions-runner-ats/
+venv/
+.venv/
