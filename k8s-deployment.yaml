@@ -24,7 +24,7 @@ spec:
       containers:
         - name: ai-resume-ats
           image: ai-resume-ats:local
-          imagePullPolicy: Never
+          imagePullPolicy: Always
 
           ports:
             - containerPort: 5000
