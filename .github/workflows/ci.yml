@@ -54,14 +54,19 @@ jobs:
           kubectl get pods -l app=ai-resume-ats
       - name: Kubernetes health check
         run: |
-          kubectl wait --for=condition=ready pod \
-            -l app=ai-resume-ats \
-            --timeout=120s
           POD=$(kubectl get pods \
             -l app=ai-resume-ats \
             --field-selector=status.phase=Running \
-            --sort-by=.metadata.creationTimestamp \
-            -o jsonpath='{.items[-1].metadata.name}')
+            -o jsonpath='{.items[0].metadata.name}')
+
           echo "Testing pod: $POD"
+
+          kubectl wait \
+            --for=condition=ready \
+            pod/"$POD" \
+            --timeout=120s
+
           kubectl exec "$POD" -- \
             python -c "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:5000/health').read().decode())"
+
+          
