@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/daniyaalabbas/-ai-resume-ats-machine.git
     targetRevision: main
-    path: .
+    path: k8s
 
   destination:
     server: https://kubernetes.default.svc
