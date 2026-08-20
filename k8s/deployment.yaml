@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: ai-resume-ats
-          image: daniyaalabbas/ai-resume-ats:latest
+          image: daniyaalabbas/ai-resume-ats:11860fdb1d2ea223ee649842ddb81b40a51c7e17
           imagePullPolicy: Always
 
           ports:
