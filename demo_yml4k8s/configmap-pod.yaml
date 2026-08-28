@@ -1,0 +1,25 @@
+#Inject ConfigMap into a Pod
+
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: configmap-demo
+
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+
+    env:
+    - name: APP_NAME
+      valueFrom:
+        configMapKeyRef:
+          name: ai-resume-config
+          key: APP_NAME
+
+    - name: ENVIRONMENT
+      valueFrom:
+        configMapKeyRef:
+          name: ai-resume-config
+          key: ENVIRONMENT
