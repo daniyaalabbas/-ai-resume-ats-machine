@@ -21,7 +21,7 @@ metadata:
   name: ai-resume-ats-stateful
 spec:
   serviceName: "ai-resume-ats-headless"
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: ai-resume-ats-stateful
