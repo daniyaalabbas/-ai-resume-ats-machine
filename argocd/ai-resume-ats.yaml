@@ -3,7 +3,6 @@ kind: Application
 metadata:
   name: ai-resume-ats
   namespace: argocd
-
 spec:
   project: default
 
@@ -16,14 +15,8 @@ spec:
     server: https://kubernetes.default.svc
     namespace: default
 
-  ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      name: ai-resume-ats
-      jsonPointers:
-        - /spec/replicas
-
   syncPolicy:
     automated:
       prune: false
       selfHeal: true
+
