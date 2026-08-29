@@ -3,17 +3,25 @@ kind: Application
 metadata:
   name: ai-resume-ats
   namespace: argocd
+
 spec:
   project: default
 
   source:
     repoURL: https://github.com/daniyaalabbas/-ai-resume-ats-machine.git
     targetRevision: main
-    path: . 
+    path: .
 
   destination:
     server: https://kubernetes.default.svc
     namespace: default
+
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      name: ai-resume-ats
+      jsonPointers:
+        - /spec/replicas
 
   syncPolicy:
     automated:
