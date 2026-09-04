@@ -1,0 +1,33 @@
+---
+- name: Minikube Node Readiness & Sanity Check
+  hosts: minikube
+  become: true
+
+  tasks:
+    - name: Ping Minikube node
+      ansible.builtin.ping:
+
+    - name: Check node disk space
+      ansible.builtin.command:
+        cmd: df -h /
+      register: disk_info
+      changed_when: false
+
+    - name: Print root filesystem usage
+      ansible.builtin.debug:
+        msg: "{{ disk_info.stdout_lines[1] }}"
+
+    - name: Verify containerd daemon is running
+      ansible.builtin.systemd:
+        name: containerd
+        state: started
+      register: containerd_status
+
+    - name: Verify sysctl bridge netfilter is enabled for K8s pod traffic
+      ansible.posix.sysctl:
+        name: net.bridge.bridge-nf-call-iptables
+        value: '1'
+        sysctl_set: true
+        state: present
+        reload: yes
+      ignore_errors: true
