@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: ai-resume-ats
 spec:
-  replicas: 2
+  replicas: 3
 
   strategy:
     type: RollingUpdate
